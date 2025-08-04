@@ -44,14 +44,14 @@ public class Ride implements RideInterface {
     @Override
     public void addVisitorToQueue(Visitor visitor) {
         visitorQueue.offer(visitor);
-        System.out.println(visitor.getName() + " added to " + rideName + " queue.");
+        System.out.println("Visitor " + visitor.getName() + " (Ticket: " + visitor.getTicketNumber() + ") added to " + rideName + " queue.");
     }
 
     @Override
     public void removeVisitorFromQueue() {
         Visitor removed = visitorQueue.poll();
         if (removed != null) {
-            System.out.println(removed.getName() + " removed from the queue.");
+            System.out.println("Visitor " + removed.getName() + " removed from the queue.");
         } else {
             System.out.println("Queue is empty. No visitor to remove.");
         }
@@ -59,12 +59,15 @@ public class Ride implements RideInterface {
 
     @Override
     public void printQueue() {
-        System.out.println("Current Queue for " + rideName + ":");
+        System.out.println("\n--- Current Queue for " + rideName + " ---");
         if (visitorQueue.isEmpty()) {
-            System.out.println(" - Queue is empty");
+            System.out.println("Queue is empty.");
         } else {
             for (Visitor v : visitorQueue) {
-                System.out.println(" - " + v.getName());
+                System.out.println("Name: " + v.getName() + ", Age: " + v.getAge() +
+                                ", Gender: " + v.getGender() +
+                                ", Ticket#: " + v.getTicketNumber() +
+                                ", VIP: " + (v.isVIP() ? "Yes" : "No"));
             }
         }
     }
@@ -108,4 +111,7 @@ public class Ride implements RideInterface {
         System.out.println("Running one cycle with: " + rider.getName());
         addVisitorToHistory(rider);
     }
+
+
+
 }
