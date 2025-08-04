@@ -1,5 +1,5 @@
-// Base class representing a general person
-public class Person {
+// Abstract base class representing a person
+public abstract class Person {
     private String name;
     private int age;
     private String gender;
@@ -28,4 +28,3 @@ public class Person {
     public String getGender() { return gender; }
     public void setGender(String gender) { this.gender = gender; }
 }
-
