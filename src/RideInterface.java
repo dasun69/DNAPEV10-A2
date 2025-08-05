@@ -1,3 +1,4 @@
+import java.util.Comparator;
 
 public interface RideInterface {
     void addVisitorToQueue(Visitor visitor);
@@ -9,5 +10,7 @@ public interface RideInterface {
     boolean checkVisitorFromHistory(Visitor visitor); 
     int numberOfVisitors(); 
     void printRideHistory(); 
+
+    void sortRideHistory(Comparator<Visitor> comparator);
 }
 

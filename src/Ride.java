@@ -5,19 +5,18 @@ public class Ride implements RideInterface {
     private int minHeightCm;
     private Employee operator;
 
-    // Queue to manage current waiting visitors
+    // Queue for current ride queue (FIFO)
     private Queue<Visitor> visitorQueue;
 
-    // List to maintain ride history
-    private List<Visitor> rideHistory;
+    // LinkedList for ride history
+    private LinkedList<Visitor> rideHistory;
 
-    // Default constructor
     public Ride() {
         this.rideName = "";
         this.minHeightCm = 0;
         this.operator = null;
         this.visitorQueue = new LinkedList<>();
-        this.rideHistory = new ArrayList<>();
+        this.rideHistory = new LinkedList<>();
     }
 
     // Constructor with parameters
@@ -26,8 +25,9 @@ public class Ride implements RideInterface {
         this.minHeightCm = minHeightCm;
         this.operator = operator;
         this.visitorQueue = new LinkedList<>();
-        this.rideHistory = new ArrayList<>();
+        this.rideHistory = new LinkedList<>();
     }
+
 
     // Getters and setters
     public String getRideName() { return rideName; }
@@ -75,12 +75,18 @@ public class Ride implements RideInterface {
     @Override
     public void addVisitorToHistory(Visitor visitor) {
         rideHistory.add(visitor);
-        System.out.println(visitor.getName() + " added to ride history.");
+        System.out.println("Visitor " + visitor.getName() + " added to ride history.");
     }
 
     @Override
     public boolean checkVisitorFromHistory(Visitor visitor) {
-        return rideHistory.contains(visitor);
+        boolean exists = rideHistory.contains(visitor);
+        if (exists) {
+            System.out.println(visitor.getName() + " has taken the ride before.");
+        } else {
+            System.out.println(visitor.getName() + " has NOT taken the ride yet.");
+        }
+        return exists;
     }
 
     @Override
@@ -88,15 +94,22 @@ public class Ride implements RideInterface {
         return rideHistory.size();
     }
 
-    @Override
+     @Override
     public void printRideHistory() {
-        System.out.println("Ride history for " + rideName + ":");
+        System.out.println("\n--- Ride History for " + rideName + " ---");
+
         if (rideHistory.isEmpty()) {
-            System.out.println(" - No visitors have taken this ride yet.");
-        } else {
-            for (Visitor v : rideHistory) {
-                System.out.println(" - " + v.getName());
-            }
+            System.out.println("No visitors have taken this ride yet.");
+            return;
+        }
+
+        Iterator<Visitor> iterator = rideHistory.iterator();
+        while (iterator.hasNext()) {
+            Visitor v = iterator.next();
+            System.out.println("Name: " + v.getName() + ", Age: " + v.getAge() +
+                               ", Gender: " + v.getGender() +
+                               ", Ticket#: " + v.getTicketNumber() +
+                               ", VIP: " + (v.isVIP() ? "Yes" : "No"));
         }
     }
 
@@ -110,6 +123,16 @@ public class Ride implements RideInterface {
         Visitor rider = visitorQueue.poll();
         System.out.println("Running one cycle with: " + rider.getName());
         addVisitorToHistory(rider);
+    }
+
+    @Override
+    public void sortRideHistory(Comparator<Visitor> comparator) {
+        if (rideHistory.isEmpty()) {
+            System.out.println("No visitors to sort in ride history.");
+            return;
+        }
+        Collections.sort(rideHistory, comparator);
+        System.out.println("Ride history sorted using provided comparator.");
     }
 
 
