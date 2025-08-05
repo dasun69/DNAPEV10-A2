@@ -4,6 +4,9 @@ public class Ride implements RideInterface {
     private String rideName;
     private int minHeightCm;
     private Employee operator;
+    private int maxRider;
+    private int numOfCycles;
+
 
     // Queue for current ride queue (FIFO)
     private Queue<Visitor> visitorQueue;
@@ -24,6 +27,16 @@ public class Ride implements RideInterface {
         this.rideName = rideName;
         this.minHeightCm = minHeightCm;
         this.operator = operator;
+        this.visitorQueue = new LinkedList<>();
+        this.rideHistory = new LinkedList<>();
+    }
+
+    public Ride(String rideName, int minHeightCm, Employee operator, int maxRider) {
+        this.rideName = rideName;
+        this.minHeightCm = minHeightCm;
+        this.operator = operator;
+        this.maxRider = Math.max(maxRider, 1); // Ensure at least 1 rider
+        this.numOfCycles = 0;
         this.visitorQueue = new LinkedList<>();
         this.rideHistory = new LinkedList<>();
     }
@@ -115,15 +128,31 @@ public class Ride implements RideInterface {
 
     @Override
     public void runOneCycle() {
-        if (visitorQueue.isEmpty()) {
-            System.out.println("No visitors in queue to run the ride.");
+        System.out.println("\n--- Running one ride cycle for: " + rideName + " ---");
+
+        if (operator == null) {
+            System.out.println("Cannot run ride. No operator assigned.");
             return;
         }
 
-        Visitor rider = visitorQueue.poll();
-        System.out.println("Running one cycle with: " + rider.getName());
-        addVisitorToHistory(rider);
+        if (visitorQueue.isEmpty()) {
+            System.out.println("Cannot run ride. Queue is empty.");
+            return;
+        }
+
+        int ridersThisCycle = Math.min(maxRider, visitorQueue.size());
+
+        System.out.println("Running cycle with " + ridersThisCycle + " visitor(s).");
+
+        for (int i = 0; i < ridersThisCycle; i++) {
+            Visitor v = visitorQueue.poll();
+            addVisitorToHistory(v); 
+        }
+
+        numOfCycles++;
+        System.out.println("Cycle complete. Total cycles run: " + numOfCycles);
     }
+
 
     @Override
     public void sortRideHistory(Comparator<Visitor> comparator) {

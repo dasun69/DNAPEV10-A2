@@ -7,6 +7,7 @@ public class AssignmentTwo {
         a2.partThree();
         a2.partFourA();
         a2.partFourB();
+        a2.partFive();
     }
 
     public void partThree() {
@@ -111,8 +112,35 @@ public class AssignmentTwo {
 
 
     public void partFive() {
-        // Future implementation for Part 5
+        System.out.println("\n=== Part 5: Run One Ride Cycle Demo ===");
+
+        Employee operator = new Employee("Olivia", 35, "Female", "EMP555", "Ride Captain");
+
+        // Ride with maxRider = 4
+        Ride hauntedHouse = new Ride("Haunted House", 110, operator, 4);
+
+        // Create 10 Visitors
+        for (int i = 1; i <= 10; i++) {
+            Visitor v = new Visitor("Visitor " + i, 20 + i, "Other", "T30" + i, i % 2 == 0);
+            hauntedHouse.addVisitorToQueue(v);
+        }
+
+        // Print visitors in queue before cycle
+        System.out.println("\nQueue before running the ride:");
+        hauntedHouse.printQueue();
+
+        // Run one cycle
+        hauntedHouse.runOneCycle();
+
+        // Print queue after one cycle
+        System.out.println("\nQueue after one cycle:");
+        hauntedHouse.printQueue();
+
+        // Print ride history
+        System.out.println("\nVisitors who took the ride:");
+        hauntedHouse.printRideHistory();
     }
+
 
     public void partSix() {
         // Future implementation for Part 6
