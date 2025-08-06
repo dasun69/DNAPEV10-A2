@@ -8,6 +8,7 @@ public class AssignmentTwo {
         a2.partFourA();
         a2.partFourB();
         a2.partFive();
+        a2.partSix();
     }
 
     public void partThree() {
@@ -143,8 +144,22 @@ public class AssignmentTwo {
 
 
     public void partSix() {
-        // Future implementation for Part 6
+        System.out.println("\n=== Part 6: Export Ride History Demo ===");
+
+        Employee operator = new Employee("Ethan", 32, "Male", "EMP777", "Safety Officer");
+        Ride wildRiver = new Ride("Wild River", 125, operator, 3); // maxRider is irrelevant here
+
+        // Add 5 visitors to ride history manually
+        wildRiver.addVisitorToHistory(new Visitor("Alex", 25, "Male", "T400", false));
+        wildRiver.addVisitorToHistory(new Visitor("Brittany", 22, "Female", "T401", true));
+        wildRiver.addVisitorToHistory(new Visitor("Carlos", 30, "Male", "T402", false));
+        wildRiver.addVisitorToHistory(new Visitor("Diana", 27, "Female", "T403", false));
+        wildRiver.addVisitorToHistory(new Visitor("Ella", 23, "Female", "T404", true));
+
+        // Export to file
+        wildRiver.exportRideHistory("ride_history.csv");
     }
+
 
     public void partSeven() {
         // Future implementation for Part 7

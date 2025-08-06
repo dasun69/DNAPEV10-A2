@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class Ride implements RideInterface {
@@ -164,6 +167,23 @@ public class Ride implements RideInterface {
         System.out.println("Ride history sorted using provided comparator.");
     }
 
+    public void exportRideHistory(String filename) {
+        if (rideHistory.isEmpty()) {
+            System.out.println("No visitors in ride history to export.");
+            return;
+        }
 
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            for (Visitor v : rideHistory) {
+                String line = v.getName() + "," + v.getAge() + "," + v.getGender() + ","
+                            + v.getTicketNumber() + "," + v.isVIP();
+                writer.write(line);
+                writer.newLine();
+            }
+            System.out.println("Ride history exported successfully to " + filename);
+        } catch (IOException e) {
+            System.out.println("Error exporting ride history: " + e.getMessage());
+        }
+    }
 
 }
