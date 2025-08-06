@@ -2,6 +2,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+import java.io.*;
 
 public class Ride implements RideInterface {
     private String rideName;
@@ -183,6 +184,44 @@ public class Ride implements RideInterface {
             System.out.println("Ride history exported successfully to " + filename);
         } catch (IOException e) {
             System.out.println("Error exporting ride history: " + e.getMessage());
+        }
+    }
+
+    public void importRideHistory(String filename) {
+        File file = new File(filename);
+
+        if (!file.exists()) {
+            System.out.println("File not found: " + filename);
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            int count = 0;
+
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+
+                if (parts.length != 5) {
+                    System.out.println("Invalid line format: " + line);
+                    continue;
+                }
+
+                String name = parts[0];
+                int age = Integer.parseInt(parts[1]);
+                String gender = parts[2];
+                String ticketNumber = parts[3];
+                boolean isVIP = Boolean.parseBoolean(parts[4]);
+
+                Visitor visitor = new Visitor(name, age, gender, ticketNumber, isVIP);
+                rideHistory.add(visitor);
+                count++;
+            }
+
+            System.out.println("Successfully imported " + count + " visitor(s) from file: " + filename);
+
+        } catch (IOException | NumberFormatException e) {
+            System.out.println("Error importing ride history: " + e.getMessage());
         }
     }
 

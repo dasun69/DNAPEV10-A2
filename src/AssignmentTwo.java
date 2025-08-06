@@ -9,6 +9,7 @@ public class AssignmentTwo {
         a2.partFourB();
         a2.partFive();
         a2.partSix();
+        a2.partSeven();
     }
 
     public void partThree() {
@@ -162,6 +163,21 @@ public class AssignmentTwo {
 
 
     public void partSeven() {
-        // Future implementation for Part 7
+        System.out.println("\n=== Part 7: Import Ride History Demo ===");
+
+        Employee operator = new Employee("Nora", 34, "Female", "EMP888", "Manager");
+
+        // Create Ride 
+        Ride importedRide = new Ride("Imported Wild River", 125, operator, 4);
+
+        // Import the CSV data created in partSix
+        importedRide.importRideHistory("ride_history.csv");
+
+        // Print confirmation
+        System.out.println("Number of visitors imported: " + importedRide.numberOfVisitors());
+
+        // Print visitor details
+        importedRide.printRideHistory();
     }
+
 }
